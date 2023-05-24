@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.3.32929.385
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EO.IdentityServer", "EO.IdentityServer\EO.IdentityServer.csproj", "{C73A207A-737C-401F-BEDF-42475E3E321E}"
+EndProject
+Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{170B00B7-69CD-467C-9933-57A5027FEFFB}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C73A207A-737C-401F-BEDF-42475E3E321E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C73A207A-737C-401F-BEDF-42475E3E321E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C73A207A-737C-401F-BEDF-42475E3E321E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C73A207A-737C-401F-BEDF-42475E3E321E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{170B00B7-69CD-467C-9933-57A5027FEFFB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{170B00B7-69CD-467C-9933-57A5027FEFFB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{170B00B7-69CD-467C-9933-57A5027FEFFB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{170B00B7-69CD-467C-9933-57A5027FEFFB}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {03ABB2B8-DDFB-4F15-AB66-7E1F745F2E78}
+	EndGlobalSection
+EndGlobal
