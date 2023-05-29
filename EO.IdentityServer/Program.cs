@@ -1,25 +1,55 @@
+using EO.IdentityServer.IdentityConfiguration;
+using IdentityServer4.Extensions;
+using IdentityServerHost.Quickstart.UI;
+using Microsoft.AspNetCore.HttpLogging;
+using System.Linq;
+
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+builder.Services.AddIdentityServer()
+    .AddInMemoryIdentityResources(IdentityConfig.IdentityResources)
+    .AddInMemoryApiScopes(IdentityConfig.ApiScopes)
+    .AddInMemoryClients(IdentityConfig.Clients)
+    .AddInMemoryApiResources(IdentityConfig.ApiResources)
+    .AddTestUsers(TestUsers.Users)
+    .AddDeveloperSigningCredential();
 
-builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddControllersWithViews();
+
+builder.Services.AddHttpLogging(logging =>
+{
+    logging.LoggingFields = HttpLoggingFields.All ^ HttpLoggingFields.RequestHeaders;
+    logging.MediaTypeOptions.AddText("application/javascript");
+    logging.RequestBodyLogLimit = 4096;
+    logging.ResponseBodyLogLimit = 4096;
+});
+
+var origins = builder.Configuration.GetSection("AllowedOrigins").AsEnumerable()
+    .Select(x => x.Value)
+    .Where(x => !x.IsNullOrEmpty())
+    .ToArray();
+
+builder.Services.AddCors(options =>
+{
+    options.AddDefaultPolicy(
+        policy =>
+        {
+            policy.WithOrigins(origins)
+                .AllowAnyHeader()
+                .AllowAnyMethod();
+        });
+});
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
+app.UseStaticFiles();
+app.UseRouting();
+app.UseIdentityServer();
 
-//app.UseHttpsRedirection();
+app.UseEndpoints(endpoints => endpoints.MapDefaultControllerRoute());
 
-app.UseAuthorization();
+app.UseHttpLogging();
 
-app.MapControllers();
+app.UseCors();
 
 app.Run();
