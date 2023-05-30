@@ -27,7 +27,7 @@ namespace EO.IdentityServer.IdentityConfiguration
                 }
             };
 
-        public static IEnumerable<Client> Clients =>
+        public static IEnumerable<Client> GetClients(string origin) =>
             new List<Client>
             {
                 // React client
@@ -35,7 +35,7 @@ namespace EO.IdentityServer.IdentityConfiguration
                 {
                     ClientId = "eventorganizer",
                     ClientName = "Event Organizer",
-                    ClientUri = "https://localhost:3000",
+                    ClientUri = origin,
 
                     AllowedGrantTypes = GrantTypes.Implicit,
 
@@ -43,11 +43,11 @@ namespace EO.IdentityServer.IdentityConfiguration
 
                     RedirectUris =
                     {
-                        "https://localhost:3000/signin-oidc",
+                        $"{origin}/signin-oidc",
                     },
 
-                    PostLogoutRedirectUris = { "https://localhost:3000/signout-oidc" },
-                    AllowedCorsOrigins = { "https://localhost:3000" },
+                    PostLogoutRedirectUris = { $"{origin}/signout-oidc" },
+                    AllowedCorsOrigins = { origin },
 
                     AllowedScopes = new List<string>
                     {

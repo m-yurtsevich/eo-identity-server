@@ -2,14 +2,19 @@ using EO.IdentityServer.IdentityConfiguration;
 using IdentityServer4.Extensions;
 using IdentityServerHost.Quickstart.UI;
 using Microsoft.AspNetCore.HttpLogging;
-using System.Linq;
+
 
 var builder = WebApplication.CreateBuilder(args);
+
+var origins = builder.Configuration.GetSection("AllowedOrigins").AsEnumerable()
+    .Select(x => x.Value)
+    .Where(x => !x.IsNullOrEmpty())
+    .ToArray();
 
 builder.Services.AddIdentityServer()
     .AddInMemoryIdentityResources(IdentityConfig.IdentityResources)
     .AddInMemoryApiScopes(IdentityConfig.ApiScopes)
-    .AddInMemoryClients(IdentityConfig.Clients)
+    .AddInMemoryClients(IdentityConfig.GetClients(origins.First()))
     .AddInMemoryApiResources(IdentityConfig.ApiResources)
     .AddTestUsers(TestUsers.Users)
     .AddDeveloperSigningCredential();
@@ -23,11 +28,6 @@ builder.Services.AddHttpLogging(logging =>
     logging.RequestBodyLogLimit = 4096;
     logging.ResponseBodyLogLimit = 4096;
 });
-
-var origins = builder.Configuration.GetSection("AllowedOrigins").AsEnumerable()
-    .Select(x => x.Value)
-    .Where(x => !x.IsNullOrEmpty())
-    .ToArray();
 
 builder.Services.AddCors(options =>
 {
