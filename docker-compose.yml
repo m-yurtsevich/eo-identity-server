@@ -1,8 +1,0 @@
-version: '3.4'
-
-services:
-  eo.identityserver:
-    image: ${DOCKER_REGISTRY-}eo-identity-server
-    build:
-      context: .
-      dockerfile: Dockerfile
